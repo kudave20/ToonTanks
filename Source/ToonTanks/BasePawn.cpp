@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "BasePawn.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Projectile.h"
-
+#include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -28,7 +28,10 @@ ABasePawn::ABasePawn()
 
 void ABasePawn::HandleDestruction()
 {
-
+	if (DeathParticles)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticles, GetActorLocation(), GetActorRotation());
+	}
 }
 
 void ABasePawn::RotateTurret(FVector LookAtTarget)
